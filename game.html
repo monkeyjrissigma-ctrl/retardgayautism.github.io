@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>F1 Legends — Race</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+      font-family: Arial, sans-serif;
+    }
+
+    #hud {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      color: white;
+      font-size: 16px;
+      text-shadow: 0 0 6px black;
+      z-index: 10;
+    }
+
+    #finish-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.85);
+      color: white;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 20;
+      text-align: center;
+    }
+
+    #finish-screen button {
+      padding: 12px 20px;
+      margin-top: 20px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      background: #ff2a2a;
+      color: white;
+      cursor: pointer;
+    }
+
+    #finish-screen button:hover {
+      background: #ff4444;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="hud">
+  <div id="lap">Lap: 1</div>
+  <div id="lap-time">Lap Time: 0.00</div>
+  <div id="best-lap">Best: --</div>
+  <div id="speed">Speed: 0 km/h</div>
+  <div id="pos">Position: 1 / 8</div>
+</div>
+
+<div id="finish-screen">
+  <h1>Race Finished!</h1>
+  <h2 id="finish-position"></h2>
+  <h3 id="finish-best-lap"></h3>
+  <button onclick="returnToMenu()">Return to Menu</button>
+</div>
+
+<script src="js/three.min.js"></script>
+<script src="js/save.js"></script>
+<script src="js/game.js"></script>
+
+</body>
+</html>
