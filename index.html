@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RetardGayAutism | 500+ Ocean Arcade</title>
+    <title>retardgayautism | Deep Ocean Arcade Portal</title>
     <style>
-        /* Deep Ocean Brand Styling & Visual Overlays */
+        /* Immersive Bioluminescent Ocean Aesthetic Style Layout */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         
         body { 
-            background: linear-gradient(180deg, #020813 0%, #05162e 50%, #010a17 100%); 
-            color: #e2f1f7; 
+            background: radial-gradient(circle at 50% 0%, #061a2b 0%, #020b14 100%);
+            color: #b3ebf2; 
             display: flex; 
             flex-direction: column; 
             min-height: 100vh;
             overflow-x: hidden;
         }
         
-        /* Top Navigation Header bar */
+        /* Neon Coral & Deep Sea Top Navbar */
         header { 
-            background-color: rgba(6, 26, 54, 0.9); 
-            padding: 14px 28px; 
+            background: rgba(4, 18, 31, 0.95);
+            padding: 14px 24px; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
@@ -28,106 +28,146 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(10px);
             box-shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
+            backdrop-filter: blur(8px);
         }
         .logo { 
             font-size: 1.7rem; 
             font-weight: 900; 
             color: #ffffff; 
-            text-transform: lowercase; 
-            letter-spacing: -1px;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+            letter-spacing: -0.5px;
+            text-shadow: 0 0 10px #ff477e;
         }
-        .logo span { 
-            color: #00f0ff; /* Glowing neon turquoise */
+        .logo span {
+            color: #00f0ff;
+            text-shadow: 0 0 10px #00f0ff;
         }
         .counter-badge { 
             background: linear-gradient(135deg, #00f0ff 0%, #0077b6 100%); 
-            padding: 6px 16px; 
+            color: #020b14;
+            padding: 6px 14px; 
             border-radius: 20px; 
             font-size: 0.85rem; 
-            font-weight: bold; 
-            color: #020813;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); 
+            font-weight: 800; 
+            box-shadow: 0 0 12px #00f0ff; 
         }
 
-        /* App Framework Core Architecture */
         .app-layout { display: flex; width: 100%; flex-grow: 1; }
         
-        /* Floating Left Abyssal Sidebar Navigation */
+        /* Left Oceanic Sidebar Navigation Dashboard */
         .sidebar { 
             width: 240px; 
-            background-color: rgba(4, 18, 38, 0.95); 
+            background: rgba(3, 15, 26, 0.9);
             padding: 20px 10px; 
-            border-right: 1px solid rgba(0, 240, 255, 0.2); 
-            height: calc(100vh - 65px); 
-            position: sticky; 
-            top: 65px; 
-            overflow-y: auto; 
+            border-right: 1px solid #005f73;
+            height: calc(100vh - 65px);
+            position: sticky;
+            top: 65px;
+            overflow-y: auto;
         }
-        .sidebar-section-title { color: #00b4d8; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; padding-left: 12px; margin: 15px 0 10px 0; letter-spacing: 1.5px; }
-        .category-btn { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 12px 14px; background: transparent; border: none; color: #90e0ef; font-size: 0.95rem; font-weight: 600; cursor: pointer; border-radius: 10px; margin-bottom: 5px; transition: all 0.2s ease; }
-        .category-btn:hover, .category-btn.active { background-color: rgba(0, 240, 255, 0.15); color: #ffffff; text-shadow: 0 0 5px #ffffff; }
-        .category-btn.active { border-left: 4px solid #00f0ff; border-radius: 0 10px 10px 0; background-color: rgba(0, 240, 255, 0.1); }
+        .sidebar-section-title { 
+            color: #00f0ff; 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            padding-left: 12px; 
+            margin: 15px 0 10px 0;
+            letter-spacing: 1px;
+        }
+        .category-btn { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            width: 100%; 
+            text-align: left; 
+            padding: 11px 14px; 
+            background: transparent; 
+            border: none; 
+            color: #a5cbd6; 
+            font-size: 0.95rem; 
+            font-weight: 600; 
+            cursor: pointer; 
+            border-radius: 8px; 
+            margin-bottom: 4px; 
+            transition: all 0.2s ease;
+        }
+        .category-btn:hover, .category-btn.active { 
+            background-color: rgba(0, 240, 255, 0.1); 
+            color: #ffffff; 
+            text-shadow: 0 0 5px #00f0ff;
+        }
+        .category-btn.active { 
+            border-left: 4px solid #ff477e; 
+            border-radius: 0 8px 8px 0; 
+            background-color: rgba(255, 71, 126, 0.1);
+        }
 
-        /* Main Content Viewport Wrapper */
-        .content-container { flex-grow: 1; padding: 24px; max-width: 1400px; margin: 0 auto; width: calc(100% - 240px); }
+        /* Scrollable Grid Canvas Showcase Section */
+        .content-container { 
+            flex-grow: 1; 
+            padding: 24px; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            width: calc(100% - 240px); 
+        }
         
-        /* Premium Dedicated Coral Window Module */
-        .featured-frame { background: rgba(5, 26, 56, 0.7); border-radius: 20px; padding: 18px; margin-bottom: 32px; border: 1px solid rgba(0, 240, 255, 0.3); backdrop-filter: blur(5px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
-        .frame-title { font-size: 1.4rem; color: #ffffff; font-weight: 800; margin-bottom: 14px; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+        /* Coral Abyss Main Frame Viewport Layout */
+        .featured-frame { 
+            background: rgba(4, 18, 31, 0.8);
+            border-radius: 16px; 
+            padding: 16px; 
+            margin-bottom: 32px; 
+            border: 2px solid #005f73;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        }
+        .frame-title { font-size: 1.4rem; color: #ffffff; font-weight: 800; margin-bottom: 14px; text-shadow: 0 0 5px #00f0ff; }
         
-        .game-viewport { width: 100%; height: 480px; background-color: #01060f; border-radius: 14px; overflow: hidden; position: relative; display: flex; justify-content: center; align-items: center; border: 2px solid #0077b6; }
-        canvas { background-color: #020b18; display: block; max-width: 100%; max-height: 100%; }
+        .game-viewport { width: 100%; height: 480px; background-color: #01060a; border-radius: 12px; overflow: hidden; position: relative; display: flex; justify-content: center; align-items: center; border: 1px solid #00f0ff; }
+        canvas { background-color: #02090f; display: block; max-width: 100%; max-height: 100%; }
         
-        .game-ui-overlay { position: absolute; top: 20px; left: 20px; pointer-events: none; font-family: monospace; font-size: 1.2rem; color: #00f0ff; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); z-index: 2; font-weight: bold; }
-        .start-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 11, 24, 0.96); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 5; }
-        .start-btn { background: linear-gradient(135deg, #00f0ff 0%, #0077b6 100%); color: #020813; border: none; padding: 16px 52px; font-size: 1.3rem; font-weight: 800; border-radius: 14px; cursor: pointer; text-transform: uppercase; box-shadow: 0 5px 20px rgba(0, 240, 255, 0.4); transition: all 0.2s ease; }
-        .start-btn:hover { transform: scale(1.04); box-shadow: 0 5px 25px #00f0ff; }
-        .controls-hint { margin-top: 16px; font-size: 0.9rem; color: #00b4d8; text-align: center; font-weight: 500; }
+        .game-ui-overlay { position: absolute; top: 20px; left: 20px; pointer-events: none; font-family: 'Courier New', monospace; font-size: 1.3rem; color: #00f0ff; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); z-index: 2; font-weight: bold; }
+        .start-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 11, 20, 0.95); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 5; }
+        .start-btn { background: linear-gradient(135deg, #ff477e 0%, #ff7096 100%); color: #ffffff; border: none; padding: 16px 48px; font-size: 1.3rem; font-weight: 800; border-radius: 12px; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 15px rgba(255, 71, 126, 0.4); transition: all 0.2s; }
+        .start-btn:hover { transform: scale(1.04); box-shadow: 0 0 25px #ff477e; }
+        .controls-hint { margin-top: 16px; font-size: 0.9rem; color: #74a4b0; text-align: center; font-weight: 500; }
 
-        /* Media Discovery Matrix Grid */
-        .grid-title { font-size: 1.4rem; color: #ffffff; font-weight: 800; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(0, 240, 255, 0.1); padding-bottom: 8px; }
-        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
+        .grid-title { font-size: 1.5rem; color: #ffffff; font-weight: 800; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; text-shadow: 0 0 5px #00f0ff; }
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 12px; }
         
-        .game-card { background-color: rgba(5, 26, 56, 0.8); border-radius: 14px; overflow: hidden; cursor: pointer; border: 1px solid rgba(0, 240, 255, 0.15); position: relative; display: flex; flex-direction: column; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-        .game-card:hover { transform: translateY(-5px) scale(1.04); border-color: #00f0ff; box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3); z-index: 5; }
-        .thumb-placeholder { width: 100%; height: 100px; background: linear-gradient(135deg, #041226 0%, #0a274c 100%); display: flex; justify-content: center; align-items: center; font-size: 2.6rem; transition: transform 0.2s; }
-        .game-card:hover .thumb-placeholder { transform: scale(1.08); }
-        .game-info { padding: 10px; background-color: rgba(4, 18, 38, 0.5); flex-grow: 1; }
+        /* Marine Submarine Grid Cards Layout */
+        .game-card { background: rgba(4, 18, 31, 0.6); border-radius: 10px; overflow: hidden; cursor: pointer; border: 1px solid #005f73; position: relative; display: flex; flex-direction: column; transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .game-card:hover { transform: translateY(-5px) scale(1.04); border-color: #00f0ff; box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); z-index: 5; }
+        .thumb-placeholder { width: 100%; height: 95px; background: linear-gradient(180deg, #05223b 0%, #020b14 100%); display: flex; justify-content: center; align-items: center; font-size: 2.6rem; }
+        .game-info { padding: 8px; background: rgba(4, 18, 31, 0.9); }
         .game-title { font-size: 0.8rem; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .game-tag { display: inline-block; font-size: 0.6rem; background-color: rgba(0, 180, 216, 0.2); color: #90e0ef; padding: 2px 6px; border-radius: 4px; margin-top: 5px; font-weight: bold; border: 1px solid rgba(0, 240, 255, 0.1); }
+        .game-tag { display: inline-block; font-size: 0.6rem; background-color: #005f73; color: #ffffff; padding: 1px 5px; border-radius: 4px; margin-top: 4px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation Section -->
     <header>
         <div class="logo">retard<span>gayautism</span></div>
-        <div class="counter-badge">🌊 505 Deep Sea Games</div>
+        <div class="counter-badge">🌊 505 Oceanic Systems Live</div>
     </header>
 
     <div class="app-layout">
-        <!-- Sidebar Navigation Options -->
         <aside class="sidebar">
-            <div class="sidebar-section-title">Ocean Zones</div>
-            <button class="category-btn active" id="btn-all" onclick="filterCategory('all')">🌐 All Depths</button>
-            <button class="category-btn" id="btn-Action" onclick="filterCategory('Action')">💥 Action</button>
-            <button class="category-btn" id="btn-Racing" onclick="filterCategory('Racing')">🏎️ Racing</button>
-            <button class="category-btn" id="btn-Shooter" onclick="filterCategory('Shooter')">🚀 Shooter</button>
-            <button class="category-btn" id="btn-Clicker" onclick="filterCategory('Clicker')">⛏️ Clicker</button>
-            <button class="category-btn" id="btn-Arcade" onclick="filterCategory('Arcade')">🏓 Arcade</button>
+            <div class="sidebar-section-title">Sonar Categories</div>
+            <button class="category-btn active" id="btn-all" onclick="filterCategory('all')">🌐 All Sea Depths</button>
+            <button class="category-btn" id="btn-Action" onclick="filterCategory('Action')">💥 Deep Action</button>
+            <button class="category-btn" id="btn-Racing" onclick="filterCategory('Racing')">🏎️ Ocean Race</button>
+            <button class="category-btn" id="btn-Shooter" onclick="filterCategory('Shooter')">🚀 Reef Shooter</button>
+            <button class="category-btn" id="btn-Clicker" onclick="filterCategory('Clicker')">⛏️ Pearl Miner</button>
+            <button class="category-btn" id="btn-Arcade" onclick="filterCategory('Arcade')">🏓 Aqua Arcade</button>
         </aside>
 
-        <!-- Main Display Module Arena -->
         <main class="content-container">
             <section class="featured-frame">
                 <div class="frame-title" id="currentGameTitle">Survival Race 3D</div>
                 <div class="game-viewport">
                     <div class="game-ui-overlay" id="gameHud"></div>
                     <div class="start-screen" id="menuScreen">
-                        <h2 id="menuTitle" style="color: #fff; margin-bottom: 16px; font-size: 2rem; font-weight: 800; text-shadow: 0 0 10px #00f0ff;">SURVIVAL RACE</h2>
+                        <h2 id="menuTitle" style="color: #fff; margin-bottom: 16px; font-size: 2rem; font-weight: 800; text-shadow: 0 0 10px #ff477e;">SURVIVAL RACE</h2>
                         <button class="start-btn" onclick="launchActiveGame()">Dive In</button>
                         <div class="controls-hint" id="menuHint">Controls: A / D or Left / Right Arrows</div>
                     </div>
@@ -135,11 +175,10 @@
                 </div>
             </section>
 
-            <!-- Media Game Cards Library Grid layout -->
             <section>
                 <div class="grid-title">
-                    <span>⚓ Explore Games</span>
-                    <span id="renderedCount" style="font-size: 0.9rem; color: #00b4d8;">Showing 505 games</span>
+                    <span>⚓ Submarine Terminals</span>
+                    <span id="renderedCount" style="font-size: 0.9rem; color: #00f0ff;">Loading system grid...</span>
                 </div>
                 <div class="games-grid" id="mainGamesGrid"></div>
             </section>
@@ -168,7 +207,7 @@
     window.addEventListener('keyup', e => keys[e.key] = false);
 
     // ==========================================
-    // OCEAN AUTOMATED MATRIX CORE (505 GAMES)
+    // 505 INTERACTIVE OCEANIC DATA GENERATOR
 
 
 
