@@ -1,0 +1,123 @@
+{
+  "teams": [
+    {
+      "id": "red_falcon",
+      "name": "Red Falcon Racing",
+      "type": "serious",
+      "color": "#d40000",
+      "stats": {
+        "speed": 95,
+        "acceleration": 90,
+        "handling": 88
+      },
+      "unlock": "default",
+      "contract": "Red Falcon Racing welcomes you. As our rookie driver, your mission is simple: bring glory to the Falcon.",
+      "logo": "red_falcon.png"
+    },
+
+    {
+      "id": "silver_arrow",
+      "name": "Silver Arrow GP",
+      "type": "serious",
+      "color": "#c0c0c0",
+      "stats": {
+        "speed": 98,
+        "acceleration": 92,
+        "handling": 90
+      },
+      "unlock": "win_3_races",
+      "contract": "Silver Arrow GP offers you a professional contract. Deliver consistent podiums and we’ll extend your deal.",
+      "logo": "silver_arrow.png"
+    },
+
+    {
+      "id": "blue_charge",
+      "name": "Blue Charge Racing",
+      "type": "serious",
+      "color": "#0044ff",
+      "stats": {
+        "speed": 97,
+        "acceleration": 95,
+        "handling": 85
+      },
+      "unlock": "win_5_races",
+      "contract": "Blue Charge Racing demands excellence. If you can handle the pressure, sign below.",
+      "logo": "blue_charge.png"
+    },
+
+    {
+      "id": "papaya_speedworks",
+      "name": "Papaya Speedworks",
+      "type": "serious",
+      "color": "#ff7f00",
+      "stats": {
+        "speed": 92,
+        "acceleration": 88,
+        "handling": 94
+      },
+      "unlock": "finish_top3_three_times",
+      "contract": "Papaya Speedworks is known for innovation. We want a driver who can match our energy.",
+      "logo": "papaya_speedworks.png"
+    },
+
+    {
+      "id": "alpine_storm",
+      "name": "Alpine Storm",
+      "type": "serious",
+      "color": "#0055ff",
+      "stats": {
+        "speed": 90,
+        "acceleration": 85,
+        "handling": 96
+      },
+      "unlock": "win_1_race",
+      "contract": "Alpine Storm offers you a chance to prove yourself. Show us your control in the corners.",
+      "logo": "alpine_storm.png"
+    },
+
+    {
+      "id": "banana_power",
+      "name": "Banana Power Racing",
+      "type": "funny",
+      "color": "#ffe135",
+      "stats": {
+        "speed": 80,
+        "acceleration": 75,
+        "handling": 70
+      },
+      "unlock": "secret",
+      "contract": "Banana Power Racing is… well… bananas. Slip into our team and peel out on track.",
+      "logo": "banana_power.png"
+    },
+
+    {
+      "id": "meme_speed",
+      "name": "MemeSpeed Motorsports",
+      "type": "funny",
+      "color": "#00ffcc",
+      "stats": {
+        "speed": 85,
+        "acceleration": 80,
+        "handling": 78
+      },
+      "unlock": "win_on_dragons_spine",
+      "contract": "MemeSpeed Motorsports wants you. Yes, YOU. Don’t ask why. Just sign.",
+      "logo": "meme_speed.png"
+    },
+
+    {
+      "id": "chaos_gp",
+      "name": "Chaos GP",
+      "type": "funny",
+      "color": "#ff00ff",
+      "stats": {
+        "speed": 99,
+        "acceleration": 40,
+        "handling": 40
+      },
+      "unlock": "finish_last_place",
+      "contract": "Chaos GP thrives on unpredictability. If you like danger, welcome aboard.",
+      "logo": "chaos_gp.png"
+    }
+  ]
+}
