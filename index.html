@@ -1,213 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>retardgayautism | Deep Ocean Arcade Portal</title>
-    <style>
-        /* Immersive Bioluminescent Ocean Aesthetic Style Layout */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-        
-        body { 
-            background: radial-gradient(circle at 50% 0%, #061a2b 0%, #020b14 100%);
-            color: #b3ebf2; 
-            display: flex; 
-            flex-direction: column; 
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        /* Neon Coral & Deep Sea Top Navbar */
-        header { 
-            background: rgba(4, 18, 31, 0.95);
-            padding: 14px 24px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 2px solid #00f0ff;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
-            backdrop-filter: blur(8px);
-        }
-        .logo { 
-            font-size: 1.7rem; 
-            font-weight: 900; 
-            color: #ffffff; 
-            letter-spacing: -0.5px;
-            text-shadow: 0 0 10px #ff477e;
-        }
-        .logo span {
-            color: #00f0ff;
-            text-shadow: 0 0 10px #00f0ff;
-        }
-        .counter-badge { 
-            background: linear-gradient(135deg, #00f0ff 0%, #0077b6 100%); 
-            color: #020b14;
-            padding: 6px 14px; 
-            border-radius: 20px; 
-            font-size: 0.85rem; 
-            font-weight: 800; 
-            box-shadow: 0 0 12px #00f0ff; 
-        }
+<meta charset="UTF-8">
+<title>Ocean Arcade</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(#003d66, #001a33);
+    color: #e0f7ff;
+  }
 
-        .app-layout { display: flex; width: 100%; flex-grow: 1; }
-        
-        /* Left Oceanic Sidebar Navigation Dashboard */
-        .sidebar { 
-            width: 240px; 
-            background: rgba(3, 15, 26, 0.9);
-            padding: 20px 10px; 
-            border-right: 1px solid #005f73;
-            height: calc(100vh - 65px);
-            position: sticky;
-            top: 65px;
-            overflow-y: auto;
-        }
-        .sidebar-section-title { 
-            color: #00f0ff; 
-            font-size: 0.75rem; 
-            font-weight: 800; 
-            text-transform: uppercase; 
-            padding-left: 12px; 
-            margin: 15px 0 10px 0;
-            letter-spacing: 1px;
-        }
-        .category-btn { 
-            display: flex; 
-            align-items: center; 
-            gap: 12px; 
-            width: 100%; 
-            text-align: left; 
-            padding: 11px 14px; 
-            background: transparent; 
-            border: none; 
-            color: #a5cbd6; 
-            font-size: 0.95rem; 
-            font-weight: 600; 
-            cursor: pointer; 
-            border-radius: 8px; 
-            margin-bottom: 4px; 
-            transition: all 0.2s ease;
-        }
-        .category-btn:hover, .category-btn.active { 
-            background-color: rgba(0, 240, 255, 0.1); 
-            color: #ffffff; 
-            text-shadow: 0 0 5px #00f0ff;
-        }
-        .category-btn.active { 
-            border-left: 4px solid #ff477e; 
-            border-radius: 0 8px 8px 0; 
-            background-color: rgba(255, 71, 126, 0.1);
-        }
+  header {
+    background: rgba(0, 40, 80, 0.8);
+    padding: 20px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #7fe3ff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    position: sticky;
+    top: 0;
+  }
 
-        /* Scrollable Grid Canvas Showcase Section */
-        .content-container { 
-            flex-grow: 1; 
-            padding: 24px; 
-            max-width: 1400px; 
-            margin: 0 auto; 
-            width: calc(100% - 240px); 
-        }
-        
-        /* Coral Abyss Main Frame Viewport Layout */
-        .featured-frame { 
-            background: rgba(4, 18, 31, 0.8);
-            border-radius: 16px; 
-            padding: 16px; 
-            margin-bottom: 32px; 
-            border: 2px solid #005f73;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-        }
-        .frame-title { font-size: 1.4rem; color: #ffffff; font-weight: 800; margin-bottom: 14px; text-shadow: 0 0 5px #00f0ff; }
-        
-        .game-viewport { width: 100%; height: 480px; background-color: #01060a; border-radius: 12px; overflow: hidden; position: relative; display: flex; justify-content: center; align-items: center; border: 1px solid #00f0ff; }
-        canvas { background-color: #02090f; display: block; max-width: 100%; max-height: 100%; }
-        
-        .game-ui-overlay { position: absolute; top: 20px; left: 20px; pointer-events: none; font-family: 'Courier New', monospace; font-size: 1.3rem; color: #00f0ff; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); z-index: 2; font-weight: bold; }
-        .start-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 11, 20, 0.95); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 5; }
-        .start-btn { background: linear-gradient(135deg, #ff477e 0%, #ff7096 100%); color: #ffffff; border: none; padding: 16px 48px; font-size: 1.3rem; font-weight: 800; border-radius: 12px; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 15px rgba(255, 71, 126, 0.4); transition: all 0.2s; }
-        .start-btn:hover { transform: scale(1.04); box-shadow: 0 0 25px #ff477e; }
-        .controls-hint { margin-top: 16px; font-size: 0.9rem; color: #74a4b0; text-align: center; font-weight: 500; }
+  .waves {
+    width: 100%;
+    height: 60px;
+    background: url('https://i.imgur.com/AXo3qYk.png');
+    background-size: cover;
+  }
 
-        .grid-title { font-size: 1.5rem; color: #ffffff; font-weight: 800; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; text-shadow: 0 0 5px #00f0ff; }
-        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 12px; }
-        
-        /* Marine Submarine Grid Cards Layout */
-        .game-card { background: rgba(4, 18, 31, 0.6); border-radius: 10px; overflow: hidden; cursor: pointer; border: 1px solid #005f73; position: relative; display: flex; flex-direction: column; transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .game-card:hover { transform: translateY(-5px) scale(1.04); border-color: #00f0ff; box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); z-index: 5; }
-        .thumb-placeholder { width: 100%; height: 95px; background: linear-gradient(180deg, #05223b 0%, #020b14 100%); display: flex; justify-content: center; align-items: center; font-size: 2.6rem; }
-        .game-info { padding: 8px; background: rgba(4, 18, 31, 0.9); }
-        .game-title { font-size: 0.8rem; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .game-tag { display: inline-block; font-size: 0.6rem; background-color: #005f73; color: #ffffff; padding: 1px 5px; border-radius: 4px; margin-top: 4px; font-weight: bold; }
-    </style>
+  main {
+    padding: 20px;
+    max-width: 1100px;
+    margin: auto;
+  }
+
+  h2 {
+    color: #9be8ff;
+    margin-top: 40px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: rgba(0, 60, 100, 0.6);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #baf3ff;
+  }
+
+  .thumb {
+    background: rgba(255,255,255,0.1);
+    height: 140px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ccefff;
+  }
+
+  .play-btn {
+    display: block;
+    margin-top: 10px;
+    padding: 8px;
+    text-align: center;
+    background: #00c8ff;
+    color: #003344;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .play-btn:hover {
+    background: #00a4d6;
+  }
+</style>
 </head>
+
 <body>
+<header>🌊 Ocean Arcade</header>
+<div class="waves"></div>
 
-    <header>
-        <div class="logo">retard<span>gayautism</span></div>
-        <div class="counter-badge">🌊 505 Oceanic Systems Live</div>
-    </header>
+<main>
 
-    <div class="app-layout">
-        <aside class="sidebar">
-            <div class="sidebar-section-title">Sonar Categories</div>
-            <button class="category-btn active" id="btn-all" onclick="filterCategory('all')">🌐 All Sea Depths</button>
-            <button class="category-btn" id="btn-Action" onclick="filterCategory('Action')">💥 Deep Action</button>
-            <button class="category-btn" id="btn-Racing" onclick="filterCategory('Racing')">🏎️ Ocean Race</button>
-            <button class="category-btn" id="btn-Shooter" onclick="filterCategory('Shooter')">🚀 Reef Shooter</button>
-            <button class="category-btn" id="btn-Clicker" onclick="filterCategory('Clicker')">⛏️ Pearl Miner</button>
-            <button class="category-btn" id="btn-Arcade" onclick="filterCategory('Arcade')">🏓 Aqua Arcade</button>
-        </aside>
+  <h2>Featured Games</h2>
+  <div class="grid">
 
-        <main class="content-container">
-            <section class="featured-frame">
-                <div class="frame-title" id="currentGameTitle">Survival Race 3D</div>
-                <div class="game-viewport">
-                    <div class="game-ui-overlay" id="gameHud"></div>
-                    <div class="start-screen" id="menuScreen">
-                        <h2 id="menuTitle" style="color: #fff; margin-bottom: 16px; font-size: 2rem; font-weight: 800; text-shadow: 0 0 10px #ff477e;">SURVIVAL RACE</h2>
-                        <button class="start-btn" onclick="launchActiveGame()">Dive In</button>
-                        <div class="controls-hint" id="menuHint">Controls: A / D or Left / Right Arrows</div>
-                    </div>
-                    <canvas id="gameCanvas" width="800" height="450"></canvas>
-                </div>
-            </section>
-
-            <section>
-                <div class="grid-title">
-                    <span>⚓ Submarine Terminals</span>
-                    <span id="renderedCount" style="font-size: 0.9rem; color: #00f0ff;">Loading system grid...</span>
-                </div>
-                <div class="games-grid" id="mainGamesGrid"></div>
-            </section>
-        </main>
+    <div class="card">
+      <div class="thumb">Dino Run</div>
+      <div class="card-title">Dino Run</div>
+      <a class="play-btn" href="games/dino-run/index.html" target="_blank">Play</a>
     </div>
 
-<script>
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-    const hud = document.getElementById('gameHud');
-    const menuScreen = document.getElementById('menuScreen');
-    const menuTitle = document.getElementById('menuTitle');
-    const currentGameTitle = document.getElementById('currentGameTitle');
-    const mainGamesGrid = document.getElementById('mainGamesGrid');
-    const renderedCount = document.getElementById('renderedCount');
+    <div class="card">
+      <div class="thumb">Space Shooter</div>
+      <div class="card-title">Space Shooter</div>
+      <a class="play-btn" href="games/space-shooter/index.html" target="_blank">Play</a>
+    </div>
 
-    let gameList = [];
-    let currentActiveGame = 0;
-    let gameLoopId = null;
-    let keys = {};
+    <div class="card">
+      <div class="thumb">2048</div>
+      <div class="card-title">2048 Puzzle</div>
+      <a class="play-btn" href="https://play2048.co/" target="_blank">Play</a>
+    </div>
 
-    window.addEventListener('keydown', e => {
-        if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"," "].includes(e.key)) e.preventDefault();
-        keys[e.key] = true;
-    });
-    window.addEventListener('keyup', e => keys[e.key] = false);
+  </div>
 
-    // ==========================================
-    // 505 INTERACTIVE OCEANIC DATA GENERATOR
+  <h2>Chaos Mode (your silly category)</h2>
+  <div class="grid">
+
+    <div class="card">
+      <div class="thumb">Weird Game</div>
+      <div class="card-title">Weird Game</div>
+      <a class="play-btn" href="#" target="_blank">Play</a>
+    </div>
+
+  </div>
+
+</main>
+
+</body>
+</html>
 
 
 
