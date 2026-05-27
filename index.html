@@ -3,113 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>X-Stream Arcade | Play Free Games</title>
+    <title>AquaArcade | 500+ Deep Sea Games</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: #0b0c10; color: #c5c6c7; padding-bottom: 50px; }
-        header { background-color: #1f2833; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #66fcf1; }
-        .logo { font-size: 1.8rem; font-weight: bold; color: #66fcf1; text-transform: uppercase; letter-spacing: 2px; }
-        .nav-links a { color: #c5c6c7; text-decoration: none; margin-left: 20px; font-weight: 600; }
-        .nav-links a:hover { color: #66fcf1; }
-        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
-        .featured-section { background: linear-gradient(135deg, #1f2833 0%, #0b0c10 100%); border: 2px solid #45a29e; border-radius: 12px; padding: 20px; margin-bottom: 40px; }
-        .section-title { font-size: 1.5rem; color: #66fcf1; margin-bottom: 15px; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
-        .game-window { width: 100%; height: 450px; background-color: #000; border-radius: 8px; overflow: hidden; position: relative; display: flex; justify-content: center; align-items: center; }
-        #gameCanvas { background-color: #111; display: block; }
-        .game-ui-overlay { position: absolute; top: 15px; left: 15px; pointer-events: none; font-family: monospace; font-size: 1.2rem; color: #fff; text-shadow: 2px 2px 0px #000; z-index: 2; }
-        .start-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 12, 16, 0.9); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 5; }
-        .start-btn { background-color: #66fcf1; color: #0b0c10; border: none; padding: 15px 40px; font-size: 1.3rem; font-weight: bold; border-radius: 30px; cursor: pointer; text-transform: uppercase; box-shadow: 0 0 15px #66fcf1; }
-        .start-btn:hover { transform: scale(1.05); }
-        .controls-hint { margin-top: 15px; font-size: 0.9rem; color: #45a29e; text-align: center; }
-        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
-        .game-card { background-color: #1f2833; border-radius: 8px; overflow: hidden; cursor: pointer; border: 1px solid #45a29e; position: relative; text-decoration: none; display: block; }
-        .game-card:hover { border-color: #66fcf1; }
-        .thumb-placeholder { width: 100%; height: 120px; background: #0b0c10; display: flex; justify-content: center; align-items: center; font-size: 2.5rem; }
-        .game-info { padding: 10px; }
-        .game-title { font-size: 0.95rem; font-weight: bold; color: #fff; }
-        .game-tag { display: inline-block; font-size: 0.75rem; background-color: #45a29e; color: #0b0c10; padding: 2px 6px; border-radius: 4px; margin-top: 5px; font-weight: bold; }
-        .badge { position: absolute; top: 8px; left: 8px; background-color: #ff4757; color: white; padding: 3px 8px; font-size: 0.7rem; font-weight: bold; border-radius: 4px; text-transform: uppercase; }
+        /* Deep Sea Theme Styling & Bioluminescent Palettes */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        
+        body { 
+            background-color: #020c1b; /* Abyssal Deep Blue */
+            color: #e2f1ff; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Marine Navigation Bar */
+        header { 
+            background: linear-gradient(90deg, #031733 0%, #052654 100%);
+            padding: 14px 24px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 2px solid #00f0ff; /* Neon Aqua Glow */
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
+        }
+        .logo { 
+            font-size: 1.6rem; 
+            font-weight: 800; 
+            color: #ffffff; 
+            text-transform: lowercase;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 8px #00f0ff;
+        }
+        .logo span { color: #00f0ff; }
+        .counter-badge { 
+            background: linear-gradient(135deg, #00f0ff 0%, #0077b6 100%); 
+            color: #020c1b;
+            padding: 6px 14px; 
+            border-radius: 20px; 
+            font-size: 0.85rem; 
+            font-weight: bold; 
+            box-shadow: 0 0 12px #00f0ff; 
+        }
+
+        .app-layout { display: flex; width: 100%; flex-grow: 1; }
+        
+        /* Submarine Sidebar Navigation Dashboard */
+        .sidebar { 
+            width: 240px; 
+            background-color: #031733; 
+            padding: 20px 10px; 
+            border-right: 1px solid #005f73; 
+            height: calc(100vh - 61px); 
+            position: sticky; 
+            top: 61px; 
+            overflow-y: auto; 
+        }
+        .sidebar-section-title { color: #0077b6; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; padding-left: 12px; margin: 15px 0 10px 0; letter-spacing: 1px; }
+        .category-btn { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 11px 14px; background: transparent; border: none; color: #94d2bd; font-size: 0.95rem; font-weight: 600; cursor: pointer; border-radius: 20px; margin-bottom: 6px; transition: all 0.2s ease; }
+        .category-btn:hover, .category-btn.active { background: rgba(0, 240, 255, 0.1); color: #ffffff; text-shadow: 0 0 5px #00f0ff; }
+        .category-btn.active { border-left: 4px solid #00f0ff; border-radius: 0 20px 20px 0; background: rgba(0, 240, 255, 0.15); }
+
+        /* Main Viewport Content Section */
+        .content-container { flex-grow: 1; padding: 24px; max-width: 1400px; margin: 0 auto; width: calc(100% - 240px); }
+        
+        /* Premium Main Playback Block Terminal */
+        .featured-frame { 
+            background: linear-gradient(180deg, #031733 0%, #020c1b 100%);
+            border-radius: 20px; 
+            padding: 16px; 
+            margin-bottom: 32px; 
+            border: 2px solid #005f73;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .frame-title { font-size: 1.3rem; color: #ffffff; font-weight: 700; margin-bottom: 14px; text-shadow: 0 0 5px rgba(0,240,255,0.5); }
+        
+        .game-viewport { width: 100%; height: 480px; background-color: #010610; border-radius: 14px; overflow: hidden; position: relative; display: flex; justify-content: center; align-items: center; border: 1px solid #003f5c; }
+        canvas { background-color: #021124; display: block; max-width: 100%; max-height: 100%; }
+        
+        .game-ui-overlay { position: absolute; top: 20px; left: 20px; pointer-events: none; font-family: monospace; font-size: 1.2rem; color: #00f0ff; text-shadow: 1px 1px 4px #000; z-index: 2; font-weight: bold; }
+        .start-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 12, 27, 0.95); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 5; }
+        .start-btn { background: linear-gradient(135deg, #00f0ff 0%, #00a8cc 100%); color: #020c1b; border: none; padding: 16px 48px; font-size: 1.3rem; font-weight: 700; border-radius: 25px; cursor: pointer; text-transform: uppercase; box-shadow: 0 0 15px #00f0ff; transition: all 0.2s ease; }
+        .start-btn:hover { transform: scale(1.03); box-shadow: 0 0 25px #00f0ff; }
+        .controls-hint { margin-top: 16px; font-size: 0.9rem; color: #94d2bd; text-align: center; }
+
+        /* Dynamic Grid Framework Elements */
+        .grid-title { font-size: 1.4rem; color: #ffffff; font-weight: 700; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #005f73; padding-bottom: 8px; }
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
+        
+        .game-card { 
+            background: #031733; 
+            border-radius: 14px; 
+            overflow: hidden; 
+            cursor: pointer; 
+            border: 1px solid #005f73; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            transition: all 0.2s ease; 
+        }
+        .game-card:hover { transform: translateY(-5px); border-color: #00f0ff; box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3); z-index: 5; }
+        .thumb-placeholder { width: 100%; height: 95px; background: #021124; display: flex; justify-content: center; align-items: center; font-size: 2.5rem; border-bottom: 1px solid #003f5c; }
+        .game-info { padding: 10px; background: #031733; }
+        .game-title { font-size: 0.8rem; font-weight: 700; color: #e2f1ff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .game-tag { display: inline-block; font-size: 0.6rem; background-color: #002b49; color: #00f0ff; padding: 2px 6px; border-radius: 10px; margin-top: 4px; font-weight: bold; border: 1px solid #005f73; }
     </style>
 </head>
 <body>
+
     <header>
-        <div class="logo">🎮 X-Stream</div>
-        <nav class="nav-links"><a href="https://crazygames.com" target="_blank">CrazyGames Portal</a></nav>
+        <div class="logo">aqua<span>arcade</span></div>
+        <div class="counter-badge">🌊 505 Oceanic Games</div>
     </header>
-    <div class="container">
-        <section class="featured-section">
-            <div class="section-title">⚡ Play Now: Survival Race 3D</div>
-            <div class="game-window">
-                <div class="game-ui-overlay">
-                    <div>SCORE: <span id="uiDistance">0</span></div>
-                    <div>SPEED: <span id="uiSpeed">0</span> km/h</div>
+
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-section-title">Marine Zones</div>
+            <button class="category-btn active" id="btn-all" onclick="filterCategory('all')">🌐 Ocean Wide</button>
+            <button class="category-btn" id="btn-Action" onclick="filterCategory('Action')">🦈 Predators</button>
+            <button class="category-btn" id="btn-Racing" onclick="filterCategory('Racing')">🏎️ Currents</button>
+            <button class="category-btn" id="btn-Shooter" onclick="filterCategory('Shooter')">🚀 Harpoons</button>
+            <button class="category-btn" id="btn-Clicker" onclick="filterCategory('Clicker')">⛏️ Pearls</button>
+            <button class="category-btn" id="btn-Arcade" onclick="filterCategory('Arcade')">🏓 Coral Reef</button>
+        </aside>
+
+        <main class="content-container">
+            <section class="featured-frame">
+                <div class="frame-title" id="currentGameTitle">Survival Race 3D</div>
+                <div class="game-viewport">
+                    <div class="game-ui-overlay" id="gameHud"></div>
+                    <div class="start-screen" id="menuScreen">
+                        <h2 id="menuTitle" style="color: #fff; margin-bottom: 16px; font-size: 2rem; font-weight: 800; text-shadow: 0 0 10px #00f0ff;">SURVIVAL RACE</h2>
+                        <button class="start-btn" onclick="launchActiveGame()">Dive In</button>
+                        <div class="controls-hint" id="menuHint">Controls: A / D or Left / Right Arrows</div>
+                    </div>
+                    <canvas id="gameCanvas" width="800" height="450"></canvas>
                 </div>
-                <div class="start-screen" id="menuScreen">
-                    <h2 style="color: #fff; margin-bottom: 20px; letter-spacing: 2px;">SURVIVAL RACE</h2>
-                    <button class="start-btn" onclick="startGame()">Start Run</button>
-                    <div class="controls-hint">Controls: A / D or Left / Right Arrows</div>
+            </section>
+
+            <section>
+                <div class="grid-title">
+                    <span>⚓ Explore Deep Sea Modules</span>
+                    <span id="renderedCount" style="font-size: 0.9rem; color: #0077b6;">Showing 505 games</span>
                 </div>
-                <canvas id="gameCanvas" width="800" height="450"></canvas>
-            </div>
-        </section>
-        <section>
-            <div class="section-title">🔥 Trending Portal Hub</div>
-            <div class="games-grid">
-                <div class="game-card" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); startGame();">
-                    <span class="badge">Live</span>
-                    <div class="thumb-placeholder">🏎️</div>
-                    <div class="game-info"><div class="game-title">Survival Race 3D</div><div class="game-tag">Racing</div></div>
-                </div>
-                <a href="https://poki.com" target="_blank" class="game-card">
-                    <div class="thumb-placeholder">🏹</div>
-                    <div class="game-info"><div class="game-title">Poki Portal</div><div class="game-tag">Action</div></div>
-                </a>
-                <a href="https://crazygames.com" target="_blank" class="game-card">
-                    <div class="thumb-placeholder">🧱</div>
-                    <div class="game-info"><div class="game-title">CrazyGames Hub</div><div class="game-tag">Sandbox</div></div>
-                </a>
-            </div>
-        </section>
+                <div class="games-grid" id="mainGamesGrid"></div>
+            </section>
+        </main>
     </div>
+
 <script>
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
-    const uiDistance = document.getElementById('uiDistance');
-    const uiSpeed = document.getElementById('uiSpeed');
+    const hud = document.getElementById('gameHud');
     const menuScreen = document.getElementById('menuScreen');
-    let gameRunning = false, playerX = 0, speed = 0, distance = 0, keys = {}, obstacles = [], spawnTimer = 0;
-    window.addEventListener('keydown', e => { if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"," "].includes(e.key)) e.preventDefault(); keys[e.key] = true; });
+    const menuTitle = document.getElementById('menuTitle');
+    const currentGameTitle = document.getElementById('currentGameTitle');
+    const mainGamesGrid = document.getElementById('mainGamesGrid');
+    const renderedCount = document.getElementById('renderedCount');
+
+    let gameList = [];
+    let currentActiveGame = 0;
+    let gameLoopId = null;
+    let keys = {};
+
+    window.addEventListener('keydown', e => {
+        if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"," "].includes(e.key)) e.preventDefault();
+        keys[e.key] = true;
+    });
     window.addEventListener('keyup', e => keys[e.key] = false);
-    function startGame() { menuScreen.style.display = 'none'; gameRunning = true; playerX = 0; speed = 7; distance = 0; obstacles = []; spawnTimer = 0; loop(); }
-    function loop() { if (!gameRunning) return; updateMechanics(); renderGraphics(); requestAnimationFrame(loop); }
-    function updateMechanics() {
-        distance += 1; uiDistance.textContent = distance; uiSpeed.textContent = Math.floor(speed * 22);
-        if (keys['ArrowLeft'] || keys['a'] || keys['A']) playerX -= 6;
-        if (keys['ArrowRight'] || keys['d'] || keys['D']) playerX += 6;
-        if (playerX < -170) playerX = -170; if (playerX > 170) playerX = 170;
-        spawnTimer++;
-        if (spawnTimer > 25) { obstacles.push({ x: (Math.random() * 340) - 170, y: 0, size: 1 }); spawnTimer = 0; if(distance > 500) speed = 9; if(distance > 1200) speed = 12; }
-        for (let i = obstacles.length - 1; i >= 0; i--) {
-            let obs = obstacles[i]; obs.y += speed; obs.size += 0.3;
-            if (obs.y > 210 && obs.y < 250) {
-                let obsPageX = (canvas.width / 2) + obs.x * (obs.y / 70), playerPageX = (canvas.width / 2) + playerX;
-                if (Math.abs(playerPageX - obsPageX) < 35) gameOver();
-            }
-            if (obs.y > 300) obstacles.splice(i, 1);
-        }
-    }
-    function renderGraphics() {
-        ctx.fillStyle = '#0b0c10'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-        let horizonY = 140; ctx.fillStyle = '#0f1015'; ctx.fillRect(0, 0, canvas.width, horizonY);
-        ctx.fillStyle = '#1f2833'; ctx.beginPath(); ctx.moveTo(canvas.width / 2 - 30, horizonY); ctx.lineTo(canvas.width / 2 + 30, horizonY); ctx.lineTo(canvas.width / 2 + 280, canvas.height); ctx.lineTo(canvas.width / 2 - 280, canvas.height); ctx.closePath(); ctx.fill();
-        obstacles.forEach(obs => { let cx = (canvas.width / 2) + obs.x * (obs.y / 70), cy = horizonY + obs.y; ctx.fillStyle = '#ff4757'; ctx.beginPath(); ctx.arc(cx, cy, obs.size * 1.8, 0, Math.PI * 2); ctx.fill(); });
-        let pScreenX = (canvas.width / 2) + playerX, pScreenY = 370;
-        ctx.fillStyle = '#66fcf1'; ctx.fillRect(pScreenX - 18, pScreenY, 36, 12);
-        ctx.fillStyle = '#45a29e'; ctx.fillRect(pScreenX - 8, pScreenY - 8, 16, 8);
-    }
-    function gameOver() { gameRunning = false; menuScreen.style.display = 'flex'; menuScreen.querySelector('h2').innerHTML = `💥 CRASHED! 💥<br><span style="font-size:1.1rem; color:#45a29e;">Score: ${distance}</span>`; menuScreen.querySelector('button').textContent = "Play Again"; }
-    renderGraphics();
-</script>
-</body>
-</html>
+
+    // ==========================================
+    // 505 SEAWORTHY PROCEDURAL DATA LOOP GENERATOR
+    // ==========================================
+    const prefixes = ["Abyssal", "Neon", "Cyber", "Pelagic", "Tidal", "Sub", "Hydro", "Deep", "Shadow", " Reef", "Aqua", "Coral", "Ocean", "Glacial", "Vortex"];
+    const cores = ["Shark", "Hunter", "Submarine", "Kraken", "Surfer", "Diver", "Ray", "Whale", "Torpedo", "Guppy", "Crab", "Treasure", "Current", "Pearl", "Wave"];
+    const icons = ["🦈", "🧜‍♂️", "潜", "🐙", "🏄‍♂️", "🤿", "🐠", "🐋", "🚀", "🐟", "🦀", "💎", "🌀", "⚪", "🌊"];
+
 
