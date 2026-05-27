@@ -16,7 +16,7 @@
       display: block;
       width: 100vw;
       height: 100vh;
-      background: #111;
+      background: #050509;
     }
   </style>
 </head>
@@ -34,59 +34,82 @@
   window.addEventListener('resize', resize);
   resize();
 
-  // Track + car settings
-  let roadWidth = 260;
-  let laneWidth = 80;
-  let roadCenter = 0; // 0 = center, negative = left, positive = right
-  let roadCurve = 0;
-  let speed = 12;
-  let maxSpeed = 40;
-  let accel = 0.2;
-  let decel = 0.1;
-  let turnSpeed = 0.04;
+  // --- TRACKS (different layouts) ---
+  // Each track is a list of curve values that repeat
+  const tracks = [
+    { name: 'Track 1', curves: [0, 0.2, 0.3, 0.1, -0.1, -0.3, -0.2, 0] },
+    { name: 'Track 2', curves: [0.3, 0.3, 0, -0.3, -0.3, 0, 0.2, -0.2] },
+    { name: 'Track 3', curves: [0, 0.1, 0.2, 0.4, 0.2, 0, -0.2, -0.4] }
+  ];
+  let currentTrack = 0;
+  let trackPos = 0;
 
+  // Car + physics
   const car = {
-    x: 0, // offset from center
-    y: 0.7, // 0..1 (screen height)
+    x: 0,      // offset from road center
+    y: 0.75,   // vertical position on screen (0..1)
     width: 40,
-    height: 70
+    height: 70,
+    angle: 0
   };
 
+  let speed = 0;
+  const maxSpeed = 45;
+  const accel = 0.4;
+  const brake = 0.7;
+  const friction = 0.08;
+  const steer = 0.04;
+
+  let roadWidth = 260;
+  let roadCenter = 0;
+  let roadCurve = 0;
+
   const keys = {};
-  window.addEventListener('keydown', e => keys[e.key] = true);
+  window.addEventListener('keydown', e => {
+    keys[e.key] = true;
+    if (e.key === '1') currentTrack = 0;
+    if (e.key === '2') currentTrack = 1;
+    if (e.key === '3') currentTrack = 2;
+  });
   window.addEventListener('keyup', e => keys[e.key] = false);
 
-  function update() {
-    // Speed control
-    if (keys['ArrowUp']) speed = Math.min(maxSpeed, speed + accel);
-    else speed = Math.max(0, speed - decel);
+  function getTrackCurve() {
+    const t = tracks[currentTrack];
+    const idx = Math.floor(trackPos) % t.curves.length;
+    return t.curves[idx];
+  }
 
-    if (keys['ArrowDown']) speed = Math.max(0, speed - accel * 2);
+  function update() {
+    // Speed
+    if (keys['ArrowUp']) speed = Math.min(maxSpeed, speed + accel);
+    else speed = Math.max(0, speed - friction);
+
+    if (keys['ArrowDown']) speed = Math.max(0, speed - brake);
+
+    // Track progression
+    trackPos += speed * 0.02;
+    roadCurve = getTrackCurve() * (speed / maxSpeed);
+    roadCenter += roadCurve * 0.4;
 
     // Steering
-    if (keys['ArrowLeft']) car.x -= 0.6;
-    if (keys['ArrowRight']) car.x += 0.6;
+    if (keys['ArrowLeft']) car.x -= 0.6 * (1 + speed / maxSpeed);
+    if (keys['ArrowRight']) car.x += 0.6 * (1 + speed / maxSpeed);
 
-    // Road curve changes slowly
-    roadCurve += (Math.random() - 0.5) * 0.002 * (speed / maxSpeed);
-    roadCenter += roadCurve * speed * 0.3;
-
-    // Car gets pushed by curve at high speed
-    car.x += roadCurve * (speed / maxSpeed) * 0.5;
+    // Car angle lean
+    car.angle = (car.x - roadCenter) * 0.02;
 
     // Off-road penalty
     const maxOffset = (roadWidth / 2 - car.width / 2) / 10;
     if (Math.abs(car.x - roadCenter) > maxOffset) {
-      speed = Math.max(0, speed - 0.5);
+      speed = Math.max(0, speed - 0.9);
     }
   }
 
   function drawRoad() {
     const w = canvas.width;
     const h = canvas.height;
-
-    const horizon = h * 0.2;
-    const segments = 40;
+    const horizon = h * 0.25;
+    const segments = 60;
 
     for (let i = 0; i < segments; i++) {
       const z1 = i / segments;
@@ -98,8 +121,8 @@
       const center1 = w / 2 + (roadCenter * 10) * z1 * 2;
       const center2 = w / 2 + (roadCenter * 10) * z2 * 2;
 
-      const halfRoad1 = (roadWidth * scale1);
-      const halfRoad2 = (roadWidth * scale2);
+      const halfRoad1 = roadWidth * scale1;
+      const halfRoad2 = roadWidth * scale2;
 
       const y1 = horizon + (h - horizon) * z1;
       const y2 = horizon + (h - horizon) * z2;
@@ -115,7 +138,7 @@
       ctx.fill();
 
       // Road
-      ctx.fillStyle = '#333';
+      ctx.fillStyle = '#2f2f33';
       ctx.beginPath();
       ctx.moveTo(center1 - halfRoad1, y1);
       ctx.lineTo(center1 + halfRoad1, y1);
@@ -124,16 +147,25 @@
       ctx.closePath();
       ctx.fill();
 
-      // Lane markings
-      ctx.strokeStyle = '#fff';
-      ctx.lineWidth = 2;
-      const lanes = 3;
-      for (let l = 1; l < lanes; l++) {
-        const lanePos1 = center1 - halfRoad1 + (halfRoad1 * 2) * (l / lanes);
-        const lanePos2 = center2 - halfRoad2 + (halfRoad2 * 2) * (l / lanes);
+      // Road edge
+      ctx.strokeStyle = '#f5f5f5';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(center1 - halfRoad1, y1);
+      ctx.lineTo(center2 - halfRoad2, y2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(center1 + halfRoad1, y1);
+      ctx.lineTo(center2 + halfRoad2, y2);
+      ctx.stroke();
+
+      // Center line (dashed)
+      if (i % 2 === 0) {
+        ctx.strokeStyle = '#ffd700';
+        ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(lanePos1, y1);
-        ctx.lineTo(lanePos2, y2);
+        ctx.moveTo(center1, y1);
+        ctx.lineTo(center2, y2);
         ctx.stroke();
       }
     }
@@ -148,14 +180,25 @@
 
     ctx.save();
     ctx.translate(carScreenX, carScreenY);
+    ctx.rotate(car.angle);
 
-    // Car body
-    ctx.fillStyle = '#e10600'; // F1 red
+    // Shadow
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.beginPath();
+    ctx.ellipse(0, car.height / 2, car.width, 10, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Body
+    ctx.fillStyle = '#e10600';
     ctx.fillRect(-car.width / 2, -car.height / 2, car.width, car.height);
 
+    // Nose
+    ctx.fillStyle = '#b00000';
+    ctx.fillRect(-car.width / 4, -car.height / 2 - 10, car.width / 2, 20);
+
     // Front wing
-    ctx.fillStyle = '#c0c0c0';
-    ctx.fillRect(-car.width, -car.height / 2 - 8, car.width * 2, 8);
+    ctx.fillStyle = '#d0d0d0';
+    ctx.fillRect(-car.width, -car.height / 2 - 14, car.width * 2, 6);
 
     // Rear wing
     ctx.fillRect(-car.width * 0.7, car.height / 2, car.width * 1.4, 8);
@@ -167,23 +210,22 @@
     ctx.restore();
   }
 
-  function loop() {
-    update();
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Sky
+  function drawSky() {
     const w = canvas.width;
     const h = canvas.height;
     const grad = ctx.createLinearGradient(0, 0, 0, h * 0.4);
-    grad.addColorStop(0, '#1b1d3c');
-    grad.addColorStop(1, '#4a6fa5');
+    grad.addColorStop(0, '#050816');
+    grad.addColorStop(1, '#304b8a');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, w, h * 0.4);
+  }
 
+  function loop() {
+    update();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawSky();
     drawRoad();
     drawCar();
-
     requestAnimationFrame(loop);
   }
 
@@ -191,5 +233,6 @@
 </script>
 </body>
 </html>
+
 
 
