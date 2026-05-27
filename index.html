@@ -1,238 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>F1 Racer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>F1 Legends — Main Menu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
-      height: 100%;
+      background: linear-gradient(#0a0a0f, #101018);
+      font-family: Arial, sans-serif;
+      color: white;
       overflow: hidden;
-      background: #000;
     }
-    canvas {
-      display: block;
-      width: 100vw;
-      height: 100vh;
-      background: #050509;
+
+    #menu-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #ff2a2a;
+      text-shadow: 0 0 10px #ff0000;
+    }
+
+    .menu-box {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(6px);
+    }
+
+    select, button {
+      width: 90%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+      font-size: 1.1rem;
+    }
+
+    button {
+      background: #ff2a2a;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #ff4444;
+    }
+
+    #contract-box {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 10px;
+      display: none;
     }
   </style>
 </head>
 <body>
-<canvas id="game"></canvas>
 
-<script>
-  const canvas = document.getElementById('game');
-  const ctx = canvas.getContext('2d');
+<div id="menu-container">
+  <h1>F1 Legends</h1>
 
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  window.addEventListener('resize', resize);
-  resize();
+  <div class="menu-box">
+    <h2>Select Track</h2>
+    <select id="track-select"></select>
+  </div>
 
-  // --- TRACKS (different layouts) ---
-  // Each track is a list of curve values that repeat
-  const tracks = [
-    { name: 'Track 1', curves: [0, 0.2, 0.3, 0.1, -0.1, -0.3, -0.2, 0] },
-    { name: 'Track 2', curves: [0.3, 0.3, 0, -0.3, -0.3, 0, 0.2, -0.2] },
-    { name: 'Track 3', curves: [0, 0.1, 0.2, 0.4, 0.2, 0, -0.2, -0.4] }
-  ];
-  let currentTrack = 0;
-  let trackPos = 0;
+  <div class="menu-box">
+    <h2>Select Team</h2>
+    <select id="team-select"></select>
+  </div>
 
-  // Car + physics
-  const car = {
-    x: 0,      // offset from road center
-    y: 0.75,   // vertical position on screen (0..1)
-    width: 40,
-    height: 70,
-    angle: 0
-  };
+  <div id="contract-box">
+    <h3>Team Contract</h3>
+    <p id="contract-text"></p>
+  </div>
 
-  let speed = 0;
-  const maxSpeed = 45;
-  const accel = 0.4;
-  const brake = 0.7;
-  const friction = 0.08;
-  const steer = 0.04;
+  <button id="start-btn">Start Race</button>
+</div>
 
-  let roadWidth = 260;
-  let roadCenter = 0;
-  let roadCurve = 0;
+<script src="js/save.js"></script>
+<script src="js/menu.js"></script>
 
-  const keys = {};
-  window.addEventListener('keydown', e => {
-    keys[e.key] = true;
-    if (e.key === '1') currentTrack = 0;
-    if (e.key === '2') currentTrack = 1;
-    if (e.key === '3') currentTrack = 2;
-  });
-  window.addEventListener('keyup', e => keys[e.key] = false);
-
-  function getTrackCurve() {
-    const t = tracks[currentTrack];
-    const idx = Math.floor(trackPos) % t.curves.length;
-    return t.curves[idx];
-  }
-
-  function update() {
-    // Speed
-    if (keys['ArrowUp']) speed = Math.min(maxSpeed, speed + accel);
-    else speed = Math.max(0, speed - friction);
-
-    if (keys['ArrowDown']) speed = Math.max(0, speed - brake);
-
-    // Track progression
-    trackPos += speed * 0.02;
-    roadCurve = getTrackCurve() * (speed / maxSpeed);
-    roadCenter += roadCurve * 0.4;
-
-    // Steering
-    if (keys['ArrowLeft']) car.x -= 0.6 * (1 + speed / maxSpeed);
-    if (keys['ArrowRight']) car.x += 0.6 * (1 + speed / maxSpeed);
-
-    // Car angle lean
-    car.angle = (car.x - roadCenter) * 0.02;
-
-    // Off-road penalty
-    const maxOffset = (roadWidth / 2 - car.width / 2) / 10;
-    if (Math.abs(car.x - roadCenter) > maxOffset) {
-      speed = Math.max(0, speed - 0.9);
-    }
-  }
-
-  function drawRoad() {
-    const w = canvas.width;
-    const h = canvas.height;
-    const horizon = h * 0.25;
-    const segments = 60;
-
-    for (let i = 0; i < segments; i++) {
-      const z1 = i / segments;
-      const z2 = (i + 1) / segments;
-
-      const scale1 = 1 - z1;
-      const scale2 = 1 - z2;
-
-      const center1 = w / 2 + (roadCenter * 10) * z1 * 2;
-      const center2 = w / 2 + (roadCenter * 10) * z2 * 2;
-
-      const halfRoad1 = roadWidth * scale1;
-      const halfRoad2 = roadWidth * scale2;
-
-      const y1 = horizon + (h - horizon) * z1;
-      const y2 = horizon + (h - horizon) * z2;
-
-      // Grass
-      ctx.fillStyle = (i % 2 === 0) ? '#064b1f' : '#075524';
-      ctx.beginPath();
-      ctx.moveTo(0, y1);
-      ctx.lineTo(w, y1);
-      ctx.lineTo(w, y2);
-      ctx.lineTo(0, y2);
-      ctx.closePath();
-      ctx.fill();
-
-      // Road
-      ctx.fillStyle = '#2f2f33';
-      ctx.beginPath();
-      ctx.moveTo(center1 - halfRoad1, y1);
-      ctx.lineTo(center1 + halfRoad1, y1);
-      ctx.lineTo(center2 + halfRoad2, y2);
-      ctx.lineTo(center2 - halfRoad2, y2);
-      ctx.closePath();
-      ctx.fill();
-
-      // Road edge
-      ctx.strokeStyle = '#f5f5f5';
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(center1 - halfRoad1, y1);
-      ctx.lineTo(center2 - halfRoad2, y2);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(center1 + halfRoad1, y1);
-      ctx.lineTo(center2 + halfRoad2, y2);
-      ctx.stroke();
-
-      // Center line (dashed)
-      if (i % 2 === 0) {
-        ctx.strokeStyle = '#ffd700';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(center1, y1);
-        ctx.lineTo(center2, y2);
-        ctx.stroke();
-      }
-    }
-  }
-
-  function drawCar() {
-    const w = canvas.width;
-    const h = canvas.height;
-
-    const carScreenX = w / 2 + (car.x - roadCenter) * 10;
-    const carScreenY = h * car.y;
-
-    ctx.save();
-    ctx.translate(carScreenX, carScreenY);
-    ctx.rotate(car.angle);
-
-    // Shadow
-    ctx.fillStyle = 'rgba(0,0,0,0.5)';
-    ctx.beginPath();
-    ctx.ellipse(0, car.height / 2, car.width, 10, 0, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Body
-    ctx.fillStyle = '#e10600';
-    ctx.fillRect(-car.width / 2, -car.height / 2, car.width, car.height);
-
-    // Nose
-    ctx.fillStyle = '#b00000';
-    ctx.fillRect(-car.width / 4, -car.height / 2 - 10, car.width / 2, 20);
-
-    // Front wing
-    ctx.fillStyle = '#d0d0d0';
-    ctx.fillRect(-car.width, -car.height / 2 - 14, car.width * 2, 6);
-
-    // Rear wing
-    ctx.fillRect(-car.width * 0.7, car.height / 2, car.width * 1.4, 8);
-
-    // Cockpit
-    ctx.fillStyle = '#111';
-    ctx.fillRect(-car.width / 4, -car.height / 6, car.width / 2, car.height / 3);
-
-    ctx.restore();
-  }
-
-  function drawSky() {
-    const w = canvas.width;
-    const h = canvas.height;
-    const grad = ctx.createLinearGradient(0, 0, 0, h * 0.4);
-    grad.addColorStop(0, '#050816');
-    grad.addColorStop(1, '#304b8a');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, w, h * 0.4);
-  }
-
-  function loop() {
-    update();
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawSky();
-    drawRoad();
-    drawCar();
-    requestAnimationFrame(loop);
-  }
-
-  loop();
-</script>
 </body>
 </html>
+
 
 
 
