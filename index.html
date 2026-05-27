@@ -3,133 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaArcade | 500+ Deep Sea Games</title>
+    <title>RetardGayAutism | 500+ Ocean Arcade</title>
     <style>
-        /* Deep Sea Theme Styling & Bioluminescent Palettes */
+        /* Deep Ocean Brand Styling & Visual Overlays */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         
         body { 
-            background-color: #020c1b; /* Abyssal Deep Blue */
-            color: #e2f1ff; 
+            background: linear-gradient(180deg, #020813 0%, #05162e 50%, #010a17 100%); 
+            color: #e2f1f7; 
             display: flex; 
             flex-direction: column; 
             min-height: 100vh;
             overflow-x: hidden;
         }
         
-        /* Marine Navigation Bar */
+        /* Top Navigation Header bar */
         header { 
-            background: linear-gradient(90deg, #031733 0%, #052654 100%);
-            padding: 14px 24px; 
+            background-color: rgba(6, 26, 54, 0.9); 
+            padding: 14px 28px; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            border-bottom: 2px solid #00f0ff; /* Neon Aqua Glow */
+            border-bottom: 2px solid #00f0ff;
             position: sticky;
             top: 0;
             z-index: 100;
+            backdrop-filter: blur(10px);
             box-shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
         }
         .logo { 
-            font-size: 1.6rem; 
-            font-weight: 800; 
+            font-size: 1.7rem; 
+            font-weight: 900; 
             color: #ffffff; 
-            text-transform: lowercase;
-            letter-spacing: 0.5px;
-            text-shadow: 0 0 8px #00f0ff;
+            text-transform: lowercase; 
+            letter-spacing: -1px;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
         }
-        .logo span { color: #00f0ff; }
+        .logo span { 
+            color: #00f0ff; /* Glowing neon turquoise */
+        }
         .counter-badge { 
             background: linear-gradient(135deg, #00f0ff 0%, #0077b6 100%); 
-            color: #020c1b;
-            padding: 6px 14px; 
+            padding: 6px 16px; 
             border-radius: 20px; 
             font-size: 0.85rem; 
             font-weight: bold; 
-            box-shadow: 0 0 12px #00f0ff; 
+            color: #020813;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); 
         }
 
+        /* App Framework Core Architecture */
         .app-layout { display: flex; width: 100%; flex-grow: 1; }
         
-        /* Submarine Sidebar Navigation Dashboard */
+        /* Floating Left Abyssal Sidebar Navigation */
         .sidebar { 
             width: 240px; 
-            background-color: #031733; 
+            background-color: rgba(4, 18, 38, 0.95); 
             padding: 20px 10px; 
-            border-right: 1px solid #005f73; 
-            height: calc(100vh - 61px); 
+            border-right: 1px solid rgba(0, 240, 255, 0.2); 
+            height: calc(100vh - 65px); 
             position: sticky; 
-            top: 61px; 
+            top: 65px; 
             overflow-y: auto; 
         }
-        .sidebar-section-title { color: #0077b6; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; padding-left: 12px; margin: 15px 0 10px 0; letter-spacing: 1px; }
-        .category-btn { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 11px 14px; background: transparent; border: none; color: #94d2bd; font-size: 0.95rem; font-weight: 600; cursor: pointer; border-radius: 20px; margin-bottom: 6px; transition: all 0.2s ease; }
-        .category-btn:hover, .category-btn.active { background: rgba(0, 240, 255, 0.1); color: #ffffff; text-shadow: 0 0 5px #00f0ff; }
-        .category-btn.active { border-left: 4px solid #00f0ff; border-radius: 0 20px 20px 0; background: rgba(0, 240, 255, 0.15); }
+        .sidebar-section-title { color: #00b4d8; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; padding-left: 12px; margin: 15px 0 10px 0; letter-spacing: 1.5px; }
+        .category-btn { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 12px 14px; background: transparent; border: none; color: #90e0ef; font-size: 0.95rem; font-weight: 600; cursor: pointer; border-radius: 10px; margin-bottom: 5px; transition: all 0.2s ease; }
+        .category-btn:hover, .category-btn.active { background-color: rgba(0, 240, 255, 0.15); color: #ffffff; text-shadow: 0 0 5px #ffffff; }
+        .category-btn.active { border-left: 4px solid #00f0ff; border-radius: 0 10px 10px 0; background-color: rgba(0, 240, 255, 0.1); }
 
-        /* Main Viewport Content Section */
+        /* Main Content Viewport Wrapper */
         .content-container { flex-grow: 1; padding: 24px; max-width: 1400px; margin: 0 auto; width: calc(100% - 240px); }
         
-        /* Premium Main Playback Block Terminal */
-        .featured-frame { 
-            background: linear-gradient(180deg, #031733 0%, #020c1b 100%);
-            border-radius: 20px; 
-            padding: 16px; 
-            margin-bottom: 32px; 
-            border: 2px solid #005f73;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-        .frame-title { font-size: 1.3rem; color: #ffffff; font-weight: 700; margin-bottom: 14px; text-shadow: 0 0 5px rgba(0,240,255,0.5); }
+        /* Premium Dedicated Coral Window Module */
+        .featured-frame { background: rgba(5, 26, 56, 0.7); border-radius: 20px; padding: 18px; margin-bottom: 32px; border: 1px solid rgba(0, 240, 255, 0.3); backdrop-filter: blur(5px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+        .frame-title { font-size: 1.4rem; color: #ffffff; font-weight: 800; margin-bottom: 14px; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
         
-        .game-viewport { width: 100%; height: 480px; background-color: #010610; border-radius: 14px; overflow: hidden; position: relative; display: flex; justify-content: center; align-items: center; border: 1px solid #003f5c; }
-        canvas { background-color: #021124; display: block; max-width: 100%; max-height: 100%; }
+        .game-viewport { width: 100%; height: 480px; background-color: #01060f; border-radius: 14px; overflow: hidden; position: relative; display: flex; justify-content: center; align-items: center; border: 2px solid #0077b6; }
+        canvas { background-color: #020b18; display: block; max-width: 100%; max-height: 100%; }
         
-        .game-ui-overlay { position: absolute; top: 20px; left: 20px; pointer-events: none; font-family: monospace; font-size: 1.2rem; color: #00f0ff; text-shadow: 1px 1px 4px #000; z-index: 2; font-weight: bold; }
-        .start-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 12, 27, 0.95); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 5; }
-        .start-btn { background: linear-gradient(135deg, #00f0ff 0%, #00a8cc 100%); color: #020c1b; border: none; padding: 16px 48px; font-size: 1.3rem; font-weight: 700; border-radius: 25px; cursor: pointer; text-transform: uppercase; box-shadow: 0 0 15px #00f0ff; transition: all 0.2s ease; }
-        .start-btn:hover { transform: scale(1.03); box-shadow: 0 0 25px #00f0ff; }
-        .controls-hint { margin-top: 16px; font-size: 0.9rem; color: #94d2bd; text-align: center; }
+        .game-ui-overlay { position: absolute; top: 20px; left: 20px; pointer-events: none; font-family: monospace; font-size: 1.2rem; color: #00f0ff; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); z-index: 2; font-weight: bold; }
+        .start-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 11, 24, 0.96); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 5; }
+        .start-btn { background: linear-gradient(135deg, #00f0ff 0%, #0077b6 100%); color: #020813; border: none; padding: 16px 52px; font-size: 1.3rem; font-weight: 800; border-radius: 14px; cursor: pointer; text-transform: uppercase; box-shadow: 0 5px 20px rgba(0, 240, 255, 0.4); transition: all 0.2s ease; }
+        .start-btn:hover { transform: scale(1.04); box-shadow: 0 5px 25px #00f0ff; }
+        .controls-hint { margin-top: 16px; font-size: 0.9rem; color: #00b4d8; text-align: center; font-weight: 500; }
 
-        /* Dynamic Grid Framework Elements */
-        .grid-title { font-size: 1.4rem; color: #ffffff; font-weight: 700; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #005f73; padding-bottom: 8px; }
+        /* Media Discovery Matrix Grid */
+        .grid-title { font-size: 1.4rem; color: #ffffff; font-weight: 800; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(0, 240, 255, 0.1); padding-bottom: 8px; }
         .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
         
-        .game-card { 
-            background: #031733; 
-            border-radius: 14px; 
-            overflow: hidden; 
-            cursor: pointer; 
-            border: 1px solid #005f73; 
-            position: relative; 
-            display: flex; 
-            flex-direction: column; 
-            transition: all 0.2s ease; 
-        }
-        .game-card:hover { transform: translateY(-5px); border-color: #00f0ff; box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3); z-index: 5; }
-        .thumb-placeholder { width: 100%; height: 95px; background: #021124; display: flex; justify-content: center; align-items: center; font-size: 2.5rem; border-bottom: 1px solid #003f5c; }
-        .game-info { padding: 10px; background: #031733; }
-        .game-title { font-size: 0.8rem; font-weight: 700; color: #e2f1ff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .game-tag { display: inline-block; font-size: 0.6rem; background-color: #002b49; color: #00f0ff; padding: 2px 6px; border-radius: 10px; margin-top: 4px; font-weight: bold; border: 1px solid #005f73; }
+        .game-card { background-color: rgba(5, 26, 56, 0.8); border-radius: 14px; overflow: hidden; cursor: pointer; border: 1px solid rgba(0, 240, 255, 0.15); position: relative; display: flex; flex-direction: column; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .game-card:hover { transform: translateY(-5px) scale(1.04); border-color: #00f0ff; box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3); z-index: 5; }
+        .thumb-placeholder { width: 100%; height: 100px; background: linear-gradient(135deg, #041226 0%, #0a274c 100%); display: flex; justify-content: center; align-items: center; font-size: 2.6rem; transition: transform 0.2s; }
+        .game-card:hover .thumb-placeholder { transform: scale(1.08); }
+        .game-info { padding: 10px; background-color: rgba(4, 18, 38, 0.5); flex-grow: 1; }
+        .game-title { font-size: 0.8rem; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .game-tag { display: inline-block; font-size: 0.6rem; background-color: rgba(0, 180, 216, 0.2); color: #90e0ef; padding: 2px 6px; border-radius: 4px; margin-top: 5px; font-weight: bold; border: 1px solid rgba(0, 240, 255, 0.1); }
     </style>
 </head>
 <body>
 
+    <!-- Header Navigation Section -->
     <header>
-        <div class="logo">aqua<span>arcade</span></div>
-        <div class="counter-badge">🌊 505 Oceanic Games</div>
+        <div class="logo">retard<span>gayautism</span></div>
+        <div class="counter-badge">🌊 505 Deep Sea Games</div>
     </header>
 
     <div class="app-layout">
+        <!-- Sidebar Navigation Options -->
         <aside class="sidebar">
-            <div class="sidebar-section-title">Marine Zones</div>
-            <button class="category-btn active" id="btn-all" onclick="filterCategory('all')">🌐 Ocean Wide</button>
-            <button class="category-btn" id="btn-Action" onclick="filterCategory('Action')">🦈 Predators</button>
-            <button class="category-btn" id="btn-Racing" onclick="filterCategory('Racing')">🏎️ Currents</button>
-            <button class="category-btn" id="btn-Shooter" onclick="filterCategory('Shooter')">🚀 Harpoons</button>
-            <button class="category-btn" id="btn-Clicker" onclick="filterCategory('Clicker')">⛏️ Pearls</button>
-            <button class="category-btn" id="btn-Arcade" onclick="filterCategory('Arcade')">🏓 Coral Reef</button>
+            <div class="sidebar-section-title">Ocean Zones</div>
+            <button class="category-btn active" id="btn-all" onclick="filterCategory('all')">🌐 All Depths</button>
+            <button class="category-btn" id="btn-Action" onclick="filterCategory('Action')">💥 Action</button>
+            <button class="category-btn" id="btn-Racing" onclick="filterCategory('Racing')">🏎️ Racing</button>
+            <button class="category-btn" id="btn-Shooter" onclick="filterCategory('Shooter')">🚀 Shooter</button>
+            <button class="category-btn" id="btn-Clicker" onclick="filterCategory('Clicker')">⛏️ Clicker</button>
+            <button class="category-btn" id="btn-Arcade" onclick="filterCategory('Arcade')">🏓 Arcade</button>
         </aside>
 
+        <!-- Main Display Module Arena -->
         <main class="content-container">
             <section class="featured-frame">
                 <div class="frame-title" id="currentGameTitle">Survival Race 3D</div>
@@ -144,10 +135,11 @@
                 </div>
             </section>
 
+            <!-- Media Game Cards Library Grid layout -->
             <section>
                 <div class="grid-title">
-                    <span>⚓ Explore Deep Sea Modules</span>
-                    <span id="renderedCount" style="font-size: 0.9rem; color: #0077b6;">Showing 505 games</span>
+                    <span>⚓ Explore Games</span>
+                    <span id="renderedCount" style="font-size: 0.9rem; color: #00b4d8;">Showing 505 games</span>
                 </div>
                 <div class="games-grid" id="mainGamesGrid"></div>
             </section>
@@ -176,10 +168,7 @@
     window.addEventListener('keyup', e => keys[e.key] = false);
 
     // ==========================================
-    // 505 SEAWORTHY PROCEDURAL DATA LOOP GENERATOR
-    // ==========================================
-    const prefixes = ["Abyssal", "Neon", "Cyber", "Pelagic", "Tidal", "Sub", "Hydro", "Deep", "Shadow", " Reef", "Aqua", "Coral", "Ocean", "Glacial", "Vortex"];
-    const cores = ["Shark", "Hunter", "Submarine", "Kraken", "Surfer", "Diver", "Ray", "Whale", "Torpedo", "Guppy", "Crab", "Treasure", "Current", "Pearl", "Wave"];
-    const icons = ["🦈", "🧜‍♂️", "潜", "🐙", "🏄‍♂️", "🤿", "🐠", "🐋", "🚀", "🐟", "🦀", "💎", "🌀", "⚪", "🌊"];
+    // OCEAN AUTOMATED MATRIX CORE (505 GAMES)
+
 
 
