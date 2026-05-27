@@ -1,141 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Ocean Arcade</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(#003d66, #001a33);
-    color: #e0f7ff;
-  }
-
-  header {
-    background: rgba(0, 40, 80, 0.8);
-    padding: 20px;
-    text-align: center;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #7fe3ff;
-    box-shadow: 0 0 20px rgba(0,0,0,0.4);
-    position: sticky;
-    top: 0;
-  }
-
-  .waves {
-    width: 100%;
-    height: 60px;
-    background: url('https://i.imgur.com/AXo3qYk.png');
-    background-size: cover;
-  }
-
-  main {
-    padding: 20px;
-    max-width: 1100px;
-    margin: auto;
-  }
-
-  h2 {
-    color: #9be8ff;
-    margin-top: 40px;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-  }
-
-  .card {
-    background: rgba(0, 60, 100, 0.6);
-    border-radius: 12px;
-    padding: 12px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.4);
-    backdrop-filter: blur(4px);
-  }
-
-  .card-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #baf3ff;
-  }
-
-  .thumb {
-    background: rgba(255,255,255,0.1);
-    height: 140px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #ccefff;
-  }
-
-  .play-btn {
-    display: block;
-    margin-top: 10px;
-    padding: 8px;
-    text-align: center;
-    background: #00c8ff;
-    color: #003344;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  .play-btn:hover {
-    background: #00a4d6;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <title>F1 Racer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+    canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      background: #111;
+    }
+  </style>
 </head>
-
 <body>
-<header>🌊 Ocean Arcade</header>
-<div class="waves"></div>
+<canvas id="game"></canvas>
 
-<main>
+<script>
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
 
-  <h2>Featured Games</h2>
-  <div class="grid">
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
 
-    <div class="card">
-      <div class="thumb">Dino Run</div>
-      <div class="card-title">Dino Run</div>
-      <a class="play-btn" href="games/dino-run/index.html" target="_blank">Play</a>
-    </div>
+  // Track + car settings
+  let roadWidth = 260;
+  let laneWidth = 80;
+  let roadCenter = 0; // 0 = center, negative = left, positive = right
+  let roadCurve = 0;
+  let speed = 12;
+  let maxSpeed = 40;
+  let accel = 0.2;
+  let decel = 0.1;
+  let turnSpeed = 0.04;
 
-    <div class="card">
-      <div class="thumb">Space Shooter</div>
-      <div class="card-title">Space Shooter</div>
-      <a class="play-btn" href="games/space-shooter/index.html" target="_blank">Play</a>
-    </div>
+  const car = {
+    x: 0, // offset from center
+    y: 0.7, // 0..1 (screen height)
+    width: 40,
+    height: 70
+  };
 
-    <div class="card">
-      <div class="thumb">2048</div>
-      <div class="card-title">2048 Puzzle</div>
-      <a class="play-btn" href="https://play2048.co/" target="_blank">Play</a>
-    </div>
+  const keys = {};
+  window.addEventListener('keydown', e => keys[e.key] = true);
+  window.addEventListener('keyup', e => keys[e.key] = false);
 
-  </div>
+  function update() {
+    // Speed control
+    if (keys['ArrowUp']) speed = Math.min(maxSpeed, speed + accel);
+    else speed = Math.max(0, speed - decel);
 
-  <h2>Chaos Mode (your silly category)</h2>
-  <div class="grid">
+    if (keys['ArrowDown']) speed = Math.max(0, speed - accel * 2);
 
-    <div class="card">
-      <div class="thumb">Weird Game</div>
-      <div class="card-title">Weird Game</div>
-      <a class="play-btn" href="#" target="_blank">Play</a>
-    </div>
+    // Steering
+    if (keys['ArrowLeft']) car.x -= 0.6;
+    if (keys['ArrowRight']) car.x += 0.6;
 
-  </div>
+    // Road curve changes slowly
+    roadCurve += (Math.random() - 0.5) * 0.002 * (speed / maxSpeed);
+    roadCenter += roadCurve * speed * 0.3;
 
-</main>
+    // Car gets pushed by curve at high speed
+    car.x += roadCurve * (speed / maxSpeed) * 0.5;
 
+    // Off-road penalty
+    const maxOffset = (roadWidth / 2 - car.width / 2) / 10;
+    if (Math.abs(car.x - roadCenter) > maxOffset) {
+      speed = Math.max(0, speed - 0.5);
+    }
+  }
+
+  function drawRoad() {
+    const w = canvas.width;
+    const h = canvas.height;
+
+    const horizon = h * 0.2;
+    const segments = 40;
+
+    for (let i = 0; i < segments; i++) {
+      const z1 = i / segments;
+      const z2 = (i + 1) / segments;
+
+      const scale1 = 1 - z1;
+      const scale2 = 1 - z2;
+
+      const center1 = w / 2 + (roadCenter * 10) * z1 * 2;
+      const center2 = w / 2 + (roadCenter * 10) * z2 * 2;
+
+      const halfRoad1 = (roadWidth * scale1);
+      const halfRoad2 = (roadWidth * scale2);
+
+      const y1 = horizon + (h - horizon) * z1;
+      const y2 = horizon + (h - horizon) * z2;
+
+      // Grass
+      ctx.fillStyle = (i % 2 === 0) ? '#064b1f' : '#075524';
+      ctx.beginPath();
+      ctx.moveTo(0, y1);
+      ctx.lineTo(w, y1);
+      ctx.lineTo(w, y2);
+      ctx.lineTo(0, y2);
+      ctx.closePath();
+      ctx.fill();
+
+      // Road
+      ctx.fillStyle = '#333';
+      ctx.beginPath();
+      ctx.moveTo(center1 - halfRoad1, y1);
+      ctx.lineTo(center1 + halfRoad1, y1);
+      ctx.lineTo(center2 + halfRoad2, y2);
+      ctx.lineTo(center2 - halfRoad2, y2);
+      ctx.closePath();
+      ctx.fill();
+
+      // Lane markings
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      const lanes = 3;
+      for (let l = 1; l < lanes; l++) {
+        const lanePos1 = center1 - halfRoad1 + (halfRoad1 * 2) * (l / lanes);
+        const lanePos2 = center2 - halfRoad2 + (halfRoad2 * 2) * (l / lanes);
+        ctx.beginPath();
+        ctx.moveTo(lanePos1, y1);
+        ctx.lineTo(lanePos2, y2);
+        ctx.stroke();
+      }
+    }
+  }
+
+  function drawCar() {
+    const w = canvas.width;
+    const h = canvas.height;
+
+    const carScreenX = w / 2 + (car.x - roadCenter) * 10;
+    const carScreenY = h * car.y;
+
+    ctx.save();
+    ctx.translate(carScreenX, carScreenY);
+
+    // Car body
+    ctx.fillStyle = '#e10600'; // F1 red
+    ctx.fillRect(-car.width / 2, -car.height / 2, car.width, car.height);
+
+    // Front wing
+    ctx.fillStyle = '#c0c0c0';
+    ctx.fillRect(-car.width, -car.height / 2 - 8, car.width * 2, 8);
+
+    // Rear wing
+    ctx.fillRect(-car.width * 0.7, car.height / 2, car.width * 1.4, 8);
+
+    // Cockpit
+    ctx.fillStyle = '#111';
+    ctx.fillRect(-car.width / 4, -car.height / 6, car.width / 2, car.height / 3);
+
+    ctx.restore();
+  }
+
+  function loop() {
+    update();
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Sky
+    const w = canvas.width;
+    const h = canvas.height;
+    const grad = ctx.createLinearGradient(0, 0, 0, h * 0.4);
+    grad.addColorStop(0, '#1b1d3c');
+    grad.addColorStop(1, '#4a6fa5');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, w, h * 0.4);
+
+    drawRoad();
+    drawCar();
+
+    requestAnimationFrame(loop);
+  }
+
+  loop();
+</script>
 </body>
 </html>
-
-
 
 
